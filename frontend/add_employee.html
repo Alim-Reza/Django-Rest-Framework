@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Add Employee</title>
+    <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        // function testing() {
+        //     var first_name = document.getElementById("form").elements["firstname"].value;
+        //     var last_name = document.getElementById("form").elements["lastname"].value;
+        //     var age = document.getElementById("form").elements["age"].value;
+        //     //console.log(first_name);
+        //     if(first_name.length==0 || last_name.length==0 || age.length==0){
+        //         alert("fill all the field");
+        //         return false;
+        //     }
+        //     else{
+        //     var csrfToken = document.getElementsByName('csrfmiddlewaretoken')[0].value;
+        //     //console.log(first_name);
+        //     var xhttp = new XMLHttpRequest();
+        //     xhttp.onreadystatechange = function () {
+        //         if (this.readyState == 4 && this.status == 200) {
+        //             // document.getElementById("demo").innerHTML =
+        //             // xhttp.responseText;
+        //             // console.log(xhttp.responseText)
+        //             var response =JSON.parse(xhttp.responseText) 
+        //             console.log(response)
+        //             console.log(typeof response)
+        //             if(response.success == false)
+        //             {
+        //                 alert("there are some problem!");
+        //             }
+        //             else{
+        //                 window.location.href = "/todo/employes"
+        //             }
+
+        //         }
+        //     };
+        //         xhttp.open("POST", "/todo/add_employee/", true);
+        //         xhttp.setRequestHeader("X-CSRFToken", csrfToken)
+        //         xhttp.send(
+        //         JSON.stringify({fname:first_name, lname:last_name, rage:age}),
+        //         );
+        // }
+        // } 
+        // starting jQuery
+
+        // $(function(){
+        // $testing = function() {
+        $(function(){
+        $("button").click(function () {
+            console.log("1");
+            $.post("/todo/add_employee/",
+                {
+                    // csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value,
+                    fname: $("#form input[name=firstname]").val(),
+                    lname: $("#form input[name=lastname]").val(),
+                    rage: $("#form input[name=age]").val()
+                },
+                function (response) {
+                    console.log("2");
+                    if (response.success == false) {
+                        alert("there are some problem!");
+                    }
+                    else {
+                        window.location.href = "/todo/employes"
+                    }
+                });
+        });
+
+        });
+
+
+
+    </script>
+
+</head>
+
+<body>
+    <form id="form" action="/todo/employes" onsubmit="return false;"><!-- {% csrf_token %} -->
+        First name: <input type="text" name="firstname"> </br>
+        Last name: <input type="text" name="lastname"> </br>
+        Age: <input type="number" name="age"></br>
+        <!-- <button onclick="testing()">submit</button> -->
+        <button>submit</button>
+    </form>
+    <p id="demo"></p>
+    <h1 id="successfull" Hidden>Successfull!</h1>
+</body>
+
+</html>
